@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+double calc(double prince, double yearly, double y)
+{
+    {
+
+        double a, b, c, d, e, f, payment, monthlyIntRate;
+
+        monthlyIntRate = yearly / 1200;
+
+        a = 1 + monthlyIntRate;
+        b = 1 / a;
+        c = 12 * y;
+        d = pow(b, c);
+        e = 1 - d;
+        f = prince * monthlyIntRate;
+
+        //calculate payment
+        payment = f / e;
+        //cout << "payment is " << payment << '\n';
+
+        return payment;
+    }
+}
+
+    int main()    
+    {
+            double principal, yearlyIntRate, years;
+            double total_paid = 0;
+            double total_principal = 0;
+            double principalPaid, monthlyIntRate;
+
+            cout << setprecision(2) << fixed;
+
+            cout << "Enter the principal, yearlyIntRate, and years" << endl;
+            cin >> principal >> yearlyIntRate >> years;
+            cout << "The principal is " << principal << ' ' << "The yearly interest rate is " << yearlyIntRate << ' ' << "Years " << years << '\n';
+
+
+            //Displays the payment calculated from the function.
+            double pay = calc(principal, yearlyIntRate, years);
+            cout << "Payment is " << pay << endl;
+
+            //Display table
+            cout << " Month    Pay     Total     Monthly     Principal    Total       Remaining " << endl;
+            cout << "                   Paid     Interest      Paid      Principal      Balance " << endl;
+            cout << "                                                       Paid    " << endl;
+            
+            double remBalance = principal;
+            
+            for (int i = 1; i <= years * 12; i++) // month
+            {
+                total_paid = total_paid + pay;
+                monthlyIntRate = remBalance * yearlyIntRate / 1200;
+                principalPaid = pay - monthlyIntRate;
+                total_principal = total_principal + principalPaid;
+
+
+                if (i <= 8 || i >= years * 12 - 7)
+                {
+                    cout << setw(4) << i;
+                    cout << setw(10) << pay;
+                    cout << setw(12) << total_paid;
+                    cout << setw(10) << monthlyIntRate;
+                    cout << setw(10) << principalPaid;
+                    cout << setw(14) << total_principal;
+                    cout << setw(14) << remBalance << endl;
+                }
+                return 0;
+            }
+    }
+    
